@@ -4,9 +4,90 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>toolbarPractice</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <div>hello</div>
+    <div class="main__container">
+        <div class="main__toolbar" id="toolbar">
+            <div class="main__tool-nav main__tool-nav-left" id="toolNavLeft">&lt;</div>
+            <div class="main__tool-nav main__tool-nav-right" id="toolNavRight">&gt;</div>
+        </div>
+    </div>
 </body>
+<script>
+    const toolbar = []
+    for(let i=0;i<10;i++){
+        toolbar.push('工具'+(i+1))
+        $('#toolbar').append('<div class="main__tool">'+'工具'+(i+1)+'</div>')
+    }
+    $(document).ready(()=>{
+        // 畫面渲染成功
+        const toolbarElement = document.getElementById("toolbar")
+        if(toolbarElement.scrollWidth !== document.body.clientWidth){
+            $('.main__tool-nav').show()
+            $('#toolNavLeft').hide()
+        }
+        $('#toolbar').on('scroll',function(){
+            if($(this).scrollLeft()===0){
+                $('#toolNavLeft').fadeOut(200)
+            } else {
+                $('#toolNavLeft').fadeIn(200)
+            }
+            if($(this).scrollLeft() === (toolbarElement.scrollWidth - document.body.clientWidth)){
+                $('#toolNavRight').fadeOut(200)
+            } else {
+                $('#toolNavRight').fadeIn(200)
+            }
+        })
+    })
+</script>
+<style>
+body{
+    padding:0;
+    margin:0;
+}
+.main__container{
+    width:100%;
+    height:100vh;
+    background-color:gray;
+    position: realtive;
+}
+.main__toolbar{
+    position: relative;
+    width: 100%;
+    height: 60px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.main__toolbar::-webkit-scrollbar{
+    display:none;
+}
+.main__tool{
+    font-size:30px;
+    color:white;
+    padding:5px 15px;
+    display:inline-block;
+    white-space: nowrap;
+}
+.main__tool-nav{
+    font-size:30px;
+    color:white;
+    background-color:gray;
+    display:none;
+    position: fixed;
+}
+.main__tool-nav-left{
+    left:0;
+}
+.main__tool-nav-right{
+    right:0;
+}
+/* @media (max-width: 1089px) {
+    .main__tool-nav{
+        display:inline-block;
+    }
+} */
+
+</style>
 </html>
